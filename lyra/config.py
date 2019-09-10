@@ -25,3 +25,6 @@ if not os.environ.get('SECRET_KEY'):
 class Config(object):
   SECRET_KEY = os.environ.get('SECRET_KEY') or key
   GROUPME_ACCESS_TOKEN = os.environ.get('GROUPME_ACCESS_TOKEN')
+  GROUPME_CLIENT_ID = os.environ.get('GROUPME_CLIENT_ID')
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///{}/lyra.db'.format(os.path.dirname(os.path.abspath(__file__)))
+  SQLALCHEMY_TRACK_MODIFICATIONS = False
