@@ -24,3 +24,4 @@ if not os.environ.get('SECRET_KEY'):
 
 class Config(object):
   SECRET_KEY = os.environ.get('SECRET_KEY') or key
+  GROUPME_ACCESS_TOKEN = os.environ.get('GROUPME_ACCESS_TOKEN')
