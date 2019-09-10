@@ -19,6 +19,11 @@ def home():
   else:
     return render_template('pages/not_logged_in.html.jinja')
 
+@views.route('/logout')
+def logout():
+  session.clear()
+  return redirect(url_for('views.home'))
+
 @views.route('/login')
 def login():
   client_id = current_app.config.get('GROUPME_CLIENT_ID')
