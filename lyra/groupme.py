@@ -20,7 +20,7 @@ class GroupmeApi:
   def list_groups(self, page=1):
     url = self._make_url('/groups')
 
-    resp = requests.get(url, data={
+    resp = requests.get(url, params={
       'page': page,
       'omit': 'memberships'
     })

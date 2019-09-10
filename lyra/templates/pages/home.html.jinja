@@ -1,5 +1,11 @@
 {% extends "base.html.jinja" %}
 
 {% block content %}
-  Hello World
+  Hello {{ user.name }}
+  <br/>
+  {% for group in groups %}
+    {{ group }}
+    <br/>
+    <br/>
+  {% endfor %}
 {% endblock %}

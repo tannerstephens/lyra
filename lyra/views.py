@@ -7,7 +7,15 @@ views = Blueprint('views', __name__)
 @views.route('/')
 def home():
   if session.get('user_id'):
-    return render_template('pages/home.html.jinja')
+    user_id = session.get('user_id')
+    user = User.query.filter_by(id=user_id).first()
+
+    access_token = session.get('access_token')
+
+    gapi = GroupmeApi(access_token)
+    groups = gapi.list_groups()
+
+    return render_template('pages/home.html.jinja', user=user, groups=groups)
   else:
     return render_template('pages/not_logged_in.html.jinja')
 
@@ -34,6 +42,7 @@ def login_callback():
 
     user.groupme_id = groupme_id
     user.image_url = user_details.get('image_url')
+    user.name = user_details.get('name')
 
     db.session.add(user)
     db.session.commit()

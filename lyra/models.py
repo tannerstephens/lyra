@@ -7,4 +7,5 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   groupme_id = db.Column(db.Integer, unique=True)
   image_url = db.column(db.String(500))
+  name = db.Column(db.String(400))
 
