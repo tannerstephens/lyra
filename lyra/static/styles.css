@@ -1,0 +1,14 @@
+html {
+  background-image: url('/static/grey.png');
+  background-repeat: repeat;
+}
+
+.is-vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

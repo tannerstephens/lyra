@@ -1,0 +1,25 @@
+{% extends "base.html.jinja" %}
+
+{% block content %}
+  <table class="table is-fullwidth">
+    <tbody>
+      {% for group in groups %}
+        <tr>
+          <td>
+            <figure class="image is-64x64">
+              <img src="{{ group.image_url if group.image_url else 'https://i.groupme.com/300x300.png.e8ec5793a332457096bc9707ffc9ac37.avatar' }}">
+            </figure>
+          </td>
+          <td><h1 class="title">{{ group.name }}</h1></td>
+          <td><a class="button is-fullwidth is-medium is-link" href="/manage/{{ group.id }}">Manage</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav class="pagination">
+    <a class="pagination-previous has-background-link has-text-white" {{ 'disabled' if page == 1 }} href='/manage?page={{ page-1 }}'>Previous</a>
+    <a class="pagination-next has-background-link has-text-white" href="/manage?page={{ page+1 }}" {{ 'disabled' if groups|length < 10 }}>Next page</a>
+  </nav>
+
+{% endblock %}

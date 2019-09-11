@@ -10,10 +10,10 @@ def create_app(config='lyra.config.Config'):
     from lyra.views import views
     app.register_blueprint(views)
 
+    from lyra.api import api
+    app.register_blueprint(api)
+
     from lyra.models import db
-    if db.engine.url.drivername == 'sqlite':
-      migrate = Migrate(app, db, render_as_batch=True)
-    else:
-      migrate = Migrate(app, db)
+    migrate = Migrate(app, db)
 
   return app

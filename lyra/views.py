@@ -1,23 +1,68 @@
+from functools import wraps
+
 from flask import Blueprint, render_template, request, redirect, current_app, url_for, session
 from lyra.groupme import GroupmeApi
 from lyra.models import User, db
 
 views = Blueprint('views', __name__)
 
-@views.route('/')
-def home():
-  if session.get('user_id'):
-    user_id = session.get('user_id')
+def logged_in(func):
+  @wraps(func)
+  def wrapper(*args, **kwargs):
+    if not session.get('user_id', False):
+      return redirect(url_for('views.home'))
+    return func(*args, **kwargs)
+  return wrapper
+
+@views.context_processor
+def inject_user():
+  user_id = session.get('user_id')
+
+  logged_in = False
+  user = None
+
+  if user_id:
     user = User.query.filter_by(id=user_id).first()
 
-    access_token = session.get('access_token')
+    if user:
+      logged_in = True
+    else:
+      redirect(url_for('views.logout'))
+  
+  return dict(
+    user = user,
+    logged_in = logged_in
+  )
 
-    gapi = GroupmeApi(access_token)
-    groups = gapi.list_groups()
+@views.route('/')
+def home():
+  return render_template('pages/home.html.jinja')
 
-    return render_template('pages/home.html.jinja', user=user, groups=groups)
-  else:
-    return render_template('pages/not_logged_in.html.jinja')
+@views.route('/manage')
+@logged_in
+def list_groups():
+  groupme_token = session.get('access_token')
+  gapi = GroupmeApi(groupme_token)
+
+  page = int(request.args.get('page', 1))
+
+  groups = gapi.get_groups(page)
+
+  return render_template('pages/list_groups.html.jinja', groups=groups, page=page)
+
+@views.route('/manage/<int:group_id>')
+@logged_in
+def manage_group(group_id):
+  groupme_token = session.get('access_token')
+  gapi = GroupmeApi(groupme_token)
+
+  group = gapi.get_group(group_id)
+
+  if not group:
+    return redirect(url_for('views.list_groups'))
+
+  return render_template('pages/manage_group.html.jinja', group=group)
+
 
 @views.route('/logout')
 def logout():
