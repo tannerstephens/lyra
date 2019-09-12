@@ -13,7 +13,7 @@ class User(db.Model):
 
 class Group(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  groupme_id = db.Column(db.Integer)
+  groupme_id = db.Column(db.Integer, unique=True)
   aliases = db.relationship('Alias', backref='group', lazy=True)
   api_id = db.Column(db.String(36), unique=True)
 
@@ -23,5 +23,3 @@ class Alias(db.Model):
   key = db.Column(db.String(50))
   group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
   user_id = db.Column(db.Integer)
-
-

@@ -28,3 +28,4 @@ class Config(object):
   GROUPME_CLIENT_ID = os.environ.get('GROUPME_CLIENT_ID')
   SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///{}/lyra.db'.format(os.path.dirname(os.path.abspath(__file__)))
   SQLALCHEMY_TRACK_MODIFICATIONS = False
+  WEBPACK_MANIFEST_PATH = './'
