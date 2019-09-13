@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-module.exports = {  
+module.exports = {
   entry: [
     "./lyra/src/js/app.js"
   ],
@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
@@ -35,6 +35,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-  ]
+  plugins: []
 };

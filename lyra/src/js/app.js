@@ -1,6 +1,6 @@
-import Index from './Index';
+import Base from './Base';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<Index/>, document.getElementById('reactEntry'))
+ReactDOM.render(<Base />, document.getElementById('reactEntry'))
