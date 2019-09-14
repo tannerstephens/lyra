@@ -7,8 +7,8 @@ def create_app(config='lyra.config.Config'):
   app.config.from_object(config)
 
   with app.app_context():
-    from lyra.views import views
-    app.register_blueprint(views)
+    from lyra.api import api_bp
+    app.register_blueprint(api_bp)
 
     from lyra.models import db
     migrate = Migrate(app, db)

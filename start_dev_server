@@ -1,5 +1,0 @@
-#!/bin/bash
-
-tmux \
-    new-session 'pipenv run python serve.py' \; \
-    split-window -h 'yarn watch' \;
