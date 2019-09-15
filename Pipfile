@@ -14,6 +14,7 @@ flask-migrate = "*"
 flask-webpack = "*"
 flask-restful = "*"
 gunicorn = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
