@@ -70,4 +70,4 @@ class Group(Resource):
 
 api.add_resource(CurrentUser, '/current-user')
 api.add_resource(Groups, '/groups')
-api.add_resource(Groups, '/groups/<int:group_id>')
+api.add_resource(Group, '/groups/<int:group_id>')
