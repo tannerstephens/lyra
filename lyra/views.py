@@ -27,4 +27,4 @@ def logout():
 @views.route('/')
 @views.route('/<path:text>')
 def react_view(text=None):
-  return render_template('index.html.jinja2')
+  return ''

@@ -1,0 +1,1 @@
+NOT_LOGGED_IN = {'type' : 'danger', 'message' : 'Not logged in'}
