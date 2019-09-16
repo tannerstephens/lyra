@@ -1,10 +1,8 @@
 from flask import Flask
 from flask_migrate import Migrate
-from flask_cors import CORS
 
 def create_app(config='lyra.config.Config'):
   app = Flask(__name__)
-  CORS(app)
 
   app.config.from_object(config)
 
