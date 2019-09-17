@@ -9,6 +9,7 @@ class Group(db.Model):
   groupme_id = db.Column(db.Integer, unique=True)
   aliases = db.relationship('Alias', backref='group', lazy=True)
   api_id = db.Column(db.String(36), unique=True)
+  managed = db.Column(db.Boolean, default=False)
 
 
 class Alias(db.Model):
