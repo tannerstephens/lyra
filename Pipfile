@@ -7,13 +7,8 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-requests = "*"
 flask-sqlalchemy = "*"
-sqlalchemy = "*"
 flask-migrate = "*"
-flask-webpack = "*"
-flask-restful = "*"
-gunicorn = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

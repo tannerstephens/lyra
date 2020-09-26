@@ -1,16 +1,19 @@
 from flask import Flask
-from flask_migrate import Migrate
+from .extensions import (
+  db,
+  migrate
+)
+
 
 def create_app(config='lyra.config.Config'):
   app = Flask(__name__)
-
   app.config.from_object(config)
 
-  with app.app_context():
-    from lyra.api import register_api
-    register_api(app)
-
-    from lyra.models import db
-    migrate = Migrate(app, db)
+  register_extensions(app)
 
   return app
+
+
+def register_extensions(app):
+  db.init_app(app)
+  migrate.init_app(app)
