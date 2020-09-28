@@ -1,0 +1,15 @@
+{% extends "pages/_base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 class="title is-2">Choose a group to add</h1>
+
+    {% for group in groups %}
+      {% with group=group %}
+        {% include 'fragments/group_list_card.html' %}
+      {% endwith %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

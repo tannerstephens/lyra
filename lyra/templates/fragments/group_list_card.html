@@ -1,0 +1,21 @@
+<a class="box" href="/groups/{{ group['id'] }}">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        {% if group['image_url'] %}
+          <img src="{{ group['image_url'] }}.avatar" alt="Group Image">
+        {% else %}
+          <img src="https://cdn.groupme.com/assets/avatars/default-group.avatar.png?version=1600984778">
+        {% endif %}
+      </figure>
+    </div>
+    <div class="media-content">
+      <h1 class="title">
+        {{ group['name'] }}
+      </h1>
+      <h1 class="subtitle">
+        {{ group['description'] }}
+      </h1>
+    </div>
+  </article>
+</a>

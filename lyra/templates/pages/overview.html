@@ -1,0 +1,30 @@
+{% extends "pages/_base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 class="title is-2">Your currently managed groups</h1>
+
+    <a class="box" href='/groups/new'>
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="{{ url_for('static', filename='img/new.png') }}" alt="new">
+          </figure>
+        </div>
+        <div class="media-content">
+          <h1 class="title">
+            Add a new group
+          </h1>
+        </div>
+      </article>
+    </a>
+
+    {% for group in groups %}
+      {% with group=group %}
+        {% include 'fragments/group_list_card.html' %}
+      {% endwith %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
