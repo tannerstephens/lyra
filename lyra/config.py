@@ -1,7 +1,5 @@
 import os
 
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 ''' GENERATE SECRET KEY '''
 
 if not os.environ.get('SECRET_KEY'):
@@ -26,5 +24,7 @@ if not os.environ.get('SECRET_KEY'):
 
 class Config(object):
   SECRET_KEY = os.environ.get('SECRET_KEY') or key
-  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///{}/lyra.db'.format(PROJECT_DIR)
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///lyra.db'
   SQLALCHEMY_TRACK_MODIFICATIONS = False
+  GROUPME_CLIENT_ID = os.environ.get('GROUPME_CLIENT_ID')
+  GROUPME_ACCESS_TOKEN = os.environ.get('GROUPME_ACCESS_TOKEN')

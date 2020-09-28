@@ -1,5 +1,5 @@
 from lyra.functions import add_lyra_to_group, remove_lyra_from_group, get_membership_id
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, g
 from ..decorators import login_required
 from ..extensions import groupme_api
 from ..models import Group
@@ -14,7 +14,7 @@ def home():
 @login_required
 def groups_overview():
   gat = session['groupme_access_token']
-  groups = Group.query.filter_by(owner=request.user).all()
+  groups = Group.query.filter_by(owner=g.user).all()
 
   def get_group_data(group):
     group_id = group.groupme_id
@@ -48,11 +48,11 @@ def manage_group(group_id):
     group = groupme_api.group(group_id, gat)
     db_group = Group(
       groupme_id=group_id,
-      owner=request.user,
+      owner=g.user,
       bot_id=bot['bot']['bot_id']
     ).save()
 
-  if db_group.owner is not request.user:
+  if db_group.owner is not g.user:
     return redirect(url_for('pages.groups_overview'))
 
   return render_template('pages/manage.html', group=group)
@@ -67,7 +67,7 @@ def remove_group(group_id):
   except:
     return redirect(url_for('pages.groups_overview'))
 
-  db_group = Group.query.filter_by(groupme_id=group_id, owner=request.user).first()
+  db_group = Group.query.filter_by(groupme_id=group_id, owner=g.user).first()
 
   if db_group is not None:
     bot_id = db_group.bot_id

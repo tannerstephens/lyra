@@ -1,4 +1,4 @@
-from flask import session, request
+from flask import session, g
 from .models import User
 
 def before_request(app):
@@ -12,4 +12,4 @@ def before_request(app):
     else:
       user = None
 
-    request.user = user
+    g.user = user

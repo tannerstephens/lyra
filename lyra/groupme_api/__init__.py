@@ -2,8 +2,6 @@ import requests
 
 from json.decoder import JSONDecodeError
 
-from sqlalchemy import exc
-
 BASE_URL = 'https://api.groupme.com/v3{endpoint}'
 
 class GroupmeAPI:
@@ -14,6 +12,7 @@ class GroupmeAPI:
   def init_app(self, app):
     self._verify_config(app)
     self.access_token = app.config['GROUPME_ACCESS_TOKEN']
+
     self.me_data = self.me()
 
   def _verify_config(self, app):
