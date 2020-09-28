@@ -1,3 +1,4 @@
+from os import access
 import re
 import requests
 
@@ -29,6 +30,11 @@ class GroupmeAPI:
     resp = requests.get(BASE_URL.format(endpoint=endpoint), headers=header, params=params)
     return self._verify_response(resp.json())
 
+  def _post_endpoint(self, endpoint, json, access_token):
+    header = self._get_auth_header(access_token)
+    resp = requests.post(BASE_URL.format(endpoint=endpoint), headers=header, json=json)
+    return self._verify_response(resp.json())
+
   def _verify_response(self, response):
     if 'response' not in response:
       raise Exception(f'Error! Invalid response from groupme! {response}')
@@ -45,3 +51,27 @@ class GroupmeAPI:
 
   def group(self, group_id, access_token=None):
     return self._get_endpoint(f'/groups/{group_id}', access_token)
+
+  def add(self, group_id, nickname, email, access_token=None):
+    data = {
+      'members': [
+        {
+          'nickname': nickname,
+          'email': email
+        }
+      ]
+    }
+
+    results_id = self._post_endpoint(f'/groups/{group_id}/members/add', data, access_token)['results_id']
+    return self._get_endpoint(f'/groups/{group_id}/members/results/{results_id}', access_token)
+
+  def create_bot(self, group_id, name, callback, access_token=None):
+    json = {
+      'bot': {
+        'name': name,
+        'group_id': group_id,
+        'callback_url': callback
+      }
+    }
+
+    return self._post_endpoint('/bots', json, access_token)

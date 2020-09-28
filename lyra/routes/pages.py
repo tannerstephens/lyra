@@ -1,4 +1,5 @@
-from flask import Blueprint, flash, render_template, request, session, redirect, url_for
+from lyra.functions import add_lyra_to_group
+from flask import Blueprint, render_template, request, session, redirect, url_for
 from ..decorators import login_required
 from ..extensions import groupme_api
 from ..models import Group
@@ -42,6 +43,8 @@ def manage_group(group_id):
   db_group = Group.query.filter_by(groupme_id=group['id']).first()
 
   if db_group is None:
+    callback = request.url_root + 'lyra/'
+    add_lyra_to_group(group_id, gat, callback)
     db_group = Group(groupme_id=group['id'], owner=request.user).save()
 
   if db_group.owner is not request.user:
