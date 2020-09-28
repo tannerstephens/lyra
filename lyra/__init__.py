@@ -12,7 +12,8 @@ from .extensions import (
   db,
   migrate,
   groupme_oauth,
-  groupme_api
+  groupme_api,
+  lyra
 )
 
 def create_app(config='lyra.config.Config'):
@@ -31,6 +32,7 @@ def register_extensions(app):
   migrate.init_app(app, db)
   groupme_oauth.init_app(app, 'auth.login')
   groupme_api.init_app(app)
+  lyra.init_app(app)
 
 def load_additional_config(app):
   DIR = path.dirname(path.abspath(__file__))

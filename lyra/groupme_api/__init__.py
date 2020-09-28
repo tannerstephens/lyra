@@ -1,6 +1,8 @@
-from os import access
-import re
 import requests
+
+from json.decoder import JSONDecodeError
+
+from sqlalchemy import exc
 
 BASE_URL = 'https://api.groupme.com/v3{endpoint}'
 
@@ -52,7 +54,7 @@ class GroupmeAPI:
   def group(self, group_id, access_token=None):
     return self._get_endpoint(f'/groups/{group_id}', access_token)
 
-  def add(self, group_id, nickname, email, access_token=None):
+  def add_user(self, group_id, nickname, email, access_token=None):
     data = {
       'members': [
         {
@@ -75,3 +77,19 @@ class GroupmeAPI:
     }
 
     return self._post_endpoint('/bots', json, access_token)
+
+  def remove_bot(self, bot_id, access_token=None):
+    json = {
+      'bot_id': bot_id
+    }
+
+    try:
+      self._post_endpoint('/bots/destroy', json, access_token)
+    except JSONDecodeError:
+      return True
+
+  def remove_user(self, group_id, membership_id, access_token=None):
+    try:
+      self._post_endpoint(f'/groups/{group_id}/members/{membership_id}/remove', None, access_token)
+    except JSONDecodeError:
+      return True

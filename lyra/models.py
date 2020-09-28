@@ -15,6 +15,10 @@ class Model(db.Model):
       db.session.commit()
     return self
 
+  def delete(self, commit=True):
+    db.session.delete(self)
+    return commit and db.session.commit()
+
 class User(Model):
   groupme_id = Column(db.Integer, unique=True, nullable=False)
   groups = relationship('Group', backref='owner', lazy=True)
@@ -22,4 +26,5 @@ class User(Model):
 
 class Group(Model):
   groupme_id = Column(db.Integer, unique=True, nullable=False)
-  user_id = Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  bot_id = Column(db.Integer, unique=True, nullable=False)
+  user_id = Column(db.String(40), db.ForeignKey('user.id'), nullable=False)

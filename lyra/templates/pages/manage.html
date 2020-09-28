@@ -4,7 +4,8 @@
 <section class="section">
   <div class="container">
     <h1 class="title is-2">{{ group['name'] }}</h1>
-    <a class="button is-danger" href="/groups">Back</a>
+    <a class="button is-info" href="/groups">Back</a>
+    <a class="button is-danger" href="/groups/{{ group['id'] }}/remove">Stop Managing Group</a>
   </div>
 </section>
 {% endblock %}
