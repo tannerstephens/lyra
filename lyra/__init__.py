@@ -1,4 +1,5 @@
 from flask import Flask
+from .routes import register_blueprints
 from .extensions import (
   db,
   migrate
@@ -10,6 +11,7 @@ def create_app(config='lyra.config.Config'):
   app.config.from_object(config)
 
   register_extensions(app)
+  register_blueprints(app)
 
   return app
 
