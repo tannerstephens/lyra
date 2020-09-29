@@ -1,5 +1,4 @@
 from enum import unique
-from flask_sqlalchemy import model
 from .extensions import db
 
 Column = db.Column
@@ -19,6 +18,11 @@ class Model(db.Model):
     db.session.delete(self)
     return commit and db.session.commit()
 
+plugins = db.Table('plugins',
+  db.Column('group_id', db.Integer, db.ForeignKey('group.id'), primary_key=True),
+  db.Column('plugin_id', db.Integer, db.ForeignKey('plugin.id'), primary_key=True)
+)
+
 class User(Model):
   groupme_id = Column(db.Integer, unique=True, nullable=False)
   groups = relationship('Group', backref='owner', lazy=True)
@@ -28,3 +32,10 @@ class Group(Model):
   groupme_id = Column(db.Integer, unique=True, nullable=False)
   bot_id = Column(db.Integer, unique=True, nullable=False)
   user_id = Column(db.String(40), db.ForeignKey('user.id'), nullable=False)
+  plugins = relationship('Plugin', secondary=plugins, lazy=True, backref='groups')
+
+class Plugin(Model):
+  name = Column(db.String(80), unique=True, nullable=False)
+
+  def __repr__(self):
+    return self.name

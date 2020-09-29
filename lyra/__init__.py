@@ -18,6 +18,7 @@ def create_app(config='lyra.config.Config'):
     register_extensions(app)
     register_blueprints(app)
     before_request(app)
+    lyra.init_app(app)
 
   return app
 
@@ -27,6 +28,5 @@ def register_extensions(app):
   upgrade()
   groupme_oauth.init_app(app, 'auth.login')
   groupme_api.init_app(app)
-  lyra.init_app(app)
 
 app = create_app()

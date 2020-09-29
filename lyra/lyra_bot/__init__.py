@@ -4,17 +4,17 @@ from os import path
 
 from flask import request
 from lyra.extensions import groupme_api
+from lyra.models import Group, Plugin
 
 DIR = path.dirname(path.abspath(__file__))
 
 class LyraBot:
   def __init__(self, app=None):
-    self._load_plugins()
-
     if app is not None:
       self.init_app(app)
 
   def init_app(self, app):
+    self._load_plugins()
     @app.route('/lyra/', methods=['POST'])
     def handle():
       self._handle_message(request.json)
@@ -28,8 +28,16 @@ class LyraBot:
       self._run_plugins(data)
 
   def _run_plugins(self, data):
+    group = Group.query.filter_by(groupme_id=data['group_id']).first()
+
+    if group is None:
+      return
+
+    enabled_plugins = set(map(lambda plugin: plugin.name, group.plugins))
+
     for plugin in self.plugins:
-      plugin.handle(data)
+      if plugin.NAME in enabled_plugins:
+        plugin.handle(data)
 
   def _load_plugins(self):
     self.plugins = []
@@ -39,5 +47,10 @@ class LyraBot:
       plugin = module_from_spec(spec)
       spec.loader.exec_module(plugin)
       self.plugins.append(plugin)
+
+      db_plugin = Plugin.query.filter_by(name=plugin.NAME).first()
+
+      if db_plugin is None:
+        Plugin(name=plugin.NAME).save()
 
 lyra = LyraBot()
