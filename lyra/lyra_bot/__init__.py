@@ -20,6 +20,9 @@ class LyraBot:
       self._handle_message(request.json)
       return ''
 
+  def get_names(self):
+    return list(map(lambda plugin: plugin.NAME, self.plugins))
+
   def _handle_message(self, data):
     if(data['sender_id'] != groupme_api.me_data['id']):
       self._run_plugins(data)
@@ -36,3 +39,5 @@ class LyraBot:
       plugin = module_from_spec(spec)
       spec.loader.exec_module(plugin)
       self.plugins.append(plugin)
+
+lyra = LyraBot()

@@ -2,13 +2,13 @@ from flask import Flask
 from flask_migrate import upgrade
 from .before_request import before_request
 from .routes import register_blueprints
+from .lyra_bot import lyra
 from .extensions import (
   db,
   migrate,
   groupme_oauth,
   groupme_api
 )
-from .lyra_bot import LyraBot
 
 def create_app(config='lyra.config.Config'):
   app = Flask(__name__)
@@ -27,6 +27,6 @@ def register_extensions(app):
   upgrade()
   groupme_oauth.init_app(app, 'auth.login')
   groupme_api.init_app(app)
-  LyraBot(app)
+  lyra.init_app(app)
 
 app = create_app()
