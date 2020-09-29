@@ -1,5 +1,5 @@
 from lyra.functions import add_lyra_to_group, remove_lyra_from_group, get_membership_id
-from flask import Blueprint, render_template, request, session, redirect, url_for, g
+from flask import Blueprint, render_template, request, session, redirect, url_for, g, current_app
 from ..decorators import login_required
 from ..extensions import groupme_api
 from ..models import Group
@@ -43,7 +43,7 @@ def manage_group(group_id):
   db_group = Group.query.filter_by(groupme_id=group_id).first()
 
   if db_group is None:
-    callback = request.url_root + 'lyra/'
+    callback = current_app.config['BASE_URL'] + '/lyra/'
     bot = add_lyra_to_group(group_id, gat, callback)
     group = groupme_api.group(group_id, gat)
     db_group = Group(

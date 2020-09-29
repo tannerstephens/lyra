@@ -28,3 +28,4 @@ class Config(object):
   SQLALCHEMY_TRACK_MODIFICATIONS = False
   GROUPME_CLIENT_ID = os.environ.get('GROUPME_CLIENT_ID')
   GROUPME_ACCESS_TOKEN = os.environ.get('GROUPME_ACCESS_TOKEN')
+  BASE_URL = os.environ.get('BASE_URL')
