@@ -1,4 +1,3 @@
-import lyra
 from lyra.extensions import groupme_api
 
 NAME = 'Mention Everyone'

@@ -95,8 +95,9 @@ class GroupmeAPI:
       return True
 
   def send_message(self, group_id, text=None, attachments=None, access_token=None):
-    if attachments is None and text is None or text == '':
+    if attachments is None and (text is None or text == ''):
       raise Exception('Text cannot be blank if attachments is empty')
+
     json = {
       'message': {
         'source_guid': str(uuid4())
