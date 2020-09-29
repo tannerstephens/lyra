@@ -1,5 +1,5 @@
 from lyra.functions import add_lyra_to_group, remove_lyra_from_group, get_membership_id
-from flask import Blueprint, render_template, session, redirect, url_for, g, current_app, request
+from flask import Blueprint, flash, render_template, session, redirect, url_for, g, current_app, request
 from ..decorators import login_required
 from ..extensions import groupme_api
 from ..models import Group, Plugin
@@ -53,6 +53,7 @@ def manage_group(group_id):
     ).save()
 
   if db_group.owner is not g.user:
+    flash('This group is already managed by someone else', 'warning')
     return redirect(url_for('pages.groups_overview'))
 
   plugins = Plugin.query.all()
