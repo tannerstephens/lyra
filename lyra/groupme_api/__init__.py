@@ -1,6 +1,7 @@
 import requests
 
 from json.decoder import JSONDecodeError
+from uuid import uuid4
 
 BASE_URL = 'https://api.groupme.com/v3{endpoint}'
 
@@ -92,3 +93,20 @@ class GroupmeAPI:
       self._post_endpoint(f'/groups/{group_id}/members/{membership_id}/remove', None, access_token)
     except JSONDecodeError:
       return True
+
+  def send_message(self, group_id, text=None, attachments=None, access_token=None):
+    if attachments is None and text is None or text == '':
+      raise Exception('Text cannot be blank if attachments is empty')
+    json = {
+      'message': {
+        'source_guid': str(uuid4())
+      }
+    }
+
+    if text:
+      json['message']['text'] = text
+
+    if attachments:
+      json['message']['attachments'] = attachments
+
+    return self._post_endpoint(f'/groups/{group_id}/messages', json, access_token)
