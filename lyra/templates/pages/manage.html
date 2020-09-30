@@ -15,11 +15,11 @@
       <form action="/groups/{{ group['id'] }}/update" method="POST">
         <div class="columns is-multiline">
           {% for plugin in plugins %}
-            <div class="column is-half">
-              <label class="checkbox">
-                <input type="checkbox" {% if plugin in enabled_plugins %}checked{% endif %} name="{{ plugin.name }}">
-                {{ plugin.name }}
-              </label>
+            <div class="column is-one-third-desktop is-half-tablet">
+              <div class="field">
+                <input class="is-checkradio is-medium is-dark" type="checkbox" name="{{ plugin.name }}" id="{{ plugin.name }}" {% if plugin in enabled_plugins %}checked{% endif %}>
+                <label for="{{ plugin.name }}">{{ plugin.name }}</label>
+              </div>
             </div>
           {% endfor %}
         </div>
