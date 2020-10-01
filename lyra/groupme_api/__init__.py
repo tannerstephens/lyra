@@ -111,3 +111,6 @@ class GroupmeAPI:
       json['message']['attachments'] = attachments
 
     return self._post_endpoint(f'/groups/{group_id}/messages', json, access_token)
+
+  def like_message(self, group_id, message_id, access_token=None):
+    return self._post_endpoint(f'/messages/{group_id}/{message_id}/like', None, access_token)
