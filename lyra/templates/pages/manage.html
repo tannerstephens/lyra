@@ -3,10 +3,28 @@
 {% block content %}
 <section class="section">
   <div class="container">
-    <h1 class="title is-2">{{ group['name'] }}</h1>
-    <div class="box">
-      <a class="button is-info" href="/groups">Back</a>
-      <a class="button is-danger" href="/groups/{{ group['id'] }}/remove">Stop Managing Group</a>
+    <div class="modal" id="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box is-fullwidth">
+          <h1 class="title is-4">Are you sure you want to remove {{ group['name']|truncate(20) }}?</h1>
+          <div class="has-text-centered">
+            <a class="button is-danger is-large" href="/groups/{{ group['id'] }}/remove">Remove!</a>
+            <button class="button is-info is-large" id="back">Go Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="level">
+      <div class="level-left">
+        <h1 class="title is-2">{{ group['name'] }}</h1>
+      </div>
+      <div class="level-right">
+        <button id="remove" class="button is-danger">Stop Managing Group</button>
+        &nbsp;
+        <a class="button is-info" href="/groups">Back</a>
+      </div>
     </div>
 
     <div class="box">
@@ -25,7 +43,7 @@
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-info" type="submit">Submit</button>
+            <button class="button is-info" type="submit">Update</button>
           </div>
           <div class="control">
             <a class="button is-info is-light" href="/groups/{{ group['id'] }}">Cancel</a>
@@ -35,4 +53,8 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block header %}
+  <script src="{{ url_for('static', filename='js/removeConfirm.js') }}"></script>
 {% endblock %}
