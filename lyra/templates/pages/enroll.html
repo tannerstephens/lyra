@@ -1,15 +1,46 @@
 {% extends "pages/_base.html" %}
 
 {% block content %}
-<section class="section">
-  <div class="container">
-    <h1 class="title is-2">Choose a group to add</h1>
+  <section class="section">
+    <div class="container">
+      <div class="level">
+        <div class="level-left">
+          <h1 class="title is-2">Choose a group to add</h1>
+        </div>
+        <div class="level-right">
+          <a class="button is-danger" href="/groups">Cancel</a>
+        </div>
+      </div>
 
-    {% for group in groups %}
-      {% with group=group %}
-        {% include 'fragments/group_list_card.html' %}
-      {% endwith %}
-    {% endfor %}
-  </div>
-</section>
+
+      {% for group in groups %}
+        {% with group=group %}
+          {% include 'fragments/group_list_card.html' %}
+        {% endwith %}
+      {% endfor %}
+
+      <a class="box" id="more">
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-64x64">
+              <img src="{{ url_for('static', filename='img/new.png') }}" alt="new">
+            </figure>
+          </div>
+          <div class="media-content">
+            <h1 class="title">
+              Load more groups
+            </h1>
+          </div>
+        </article>
+      </a>
+
+      <div id="no-more" class="has-text-centered is-hidden"><h1 class="title has-text-grey">No More Groups</h1></div>
+
+      <span class="loaderContainer is-hidden" id="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span>
+    </div>
+  </section>
+{% endblock %}
+
+{% block header %}
+  <script src="{{ url_for('static', filename='js/enroll.js') }}"></script>
 {% endblock %}

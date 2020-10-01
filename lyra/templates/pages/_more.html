@@ -1,0 +1,5 @@
+{% for group in groups %}
+  {% with group=group %}
+    {% include 'fragments/group_list_card.html' %}
+  {% endwith %}
+{% endfor %}

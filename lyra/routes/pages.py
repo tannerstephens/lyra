@@ -20,7 +20,7 @@ def groups_overview():
     group_id = group.groupme_id
     return groupme_api.group(group_id, gat)
 
-  groups = map(get_group_data, groups)
+  groups = sorted(map(get_group_data, groups), key=lambda group: group['name'])
   return render_template('pages/overview.html', groups=groups)
 
 @pages.route('/groups/new')
@@ -109,3 +109,14 @@ def update_group(group_id):
   db_group.save()
 
   return redirect(url_for('pages.manage_group', group_id=group_id))
+
+@pages.route('/groups/new/more')
+@login_required
+def get_more_groups():
+  gat = session['groupme_access_token']
+
+  page = request.args['page']
+
+  groups = groupme_api.groups(gat, page=page)
+
+  return render_template('pages/_more.html', groups=groups)
