@@ -1,8 +1,6 @@
-from lyra.extensions import groupme_api
-
 NAME = 'Doot Doot'
 
-def handle(data):
+def handle(data, groupme_api):
   if '!doot' in data['text'].lower():
     attachments = [
       {

@@ -1,8 +1,6 @@
-from lyra.extensions import groupme_api
-
 NAME = 'Mention Everyone'
 
-def handle(data):
+def handle(data, groupme_api):
   if '@everyone' in data['text'].lower():
     group = groupme_api.group(data['group_id'])
     members = list(map(lambda member: member['user_id'], group['members']))

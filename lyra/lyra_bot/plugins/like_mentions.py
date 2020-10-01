@@ -1,8 +1,6 @@
-from lyra.extensions import groupme_api
-
 NAME = 'Like Mentions'
 
-def handle(data):
+def handle(data, groupme_api):
   if 'attachments' not in data:
     return
 

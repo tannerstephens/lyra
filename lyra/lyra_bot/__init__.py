@@ -37,7 +37,7 @@ class LyraBot:
 
     for plugin in self.plugins:
       if plugin.NAME in enabled_plugins:
-        plugin.handle(data)
+        plugin.handle(data, groupme_api)
 
   def _load_plugins(self):
     self.plugins = []
