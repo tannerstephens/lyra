@@ -1,4 +1,3 @@
-from enum import unique
 from .extensions import db
 
 Column = db.Column
