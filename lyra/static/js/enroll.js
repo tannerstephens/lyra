@@ -23,15 +23,7 @@ window.onload = () => {
     }
   };
 
-  window.onscroll = () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      loadMore();
-    }
-  }
 
-  moreButton.onclick = () => {
-    loadMore();
-  }
 
   loadMore = () => {
     if(!moreButton.disabled) {
@@ -54,5 +46,15 @@ window.onload = () => {
           hide(loader);
         });
     }
+  }
+
+  window.onscroll = () => {
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight-100)) {
+      loadMore();
+    }
+  }
+
+  moreButton.onclick = () => {
+    loadMore();
   }
 }
