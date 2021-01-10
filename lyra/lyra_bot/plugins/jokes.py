@@ -11,6 +11,7 @@ def handle(data, groupme_api):
     joke = get(JOKE_URL).json()
 
     groupme_api.send_message(data['group_id'], joke['setup'])
+    start_delivery_thread(data, joke, groupme_api)
 
 
 def start_delivery_thread(data, joke, groupme_api):
