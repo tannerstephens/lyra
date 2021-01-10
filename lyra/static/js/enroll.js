@@ -23,7 +23,17 @@ window.onload = () => {
     }
   };
 
+  window.onscroll = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      loadMore();
+    }
+  }
+
   moreButton.onclick = () => {
+    loadMore();
+  }
+
+  loadMore = () => {
     if(!moreButton.disabled) {
       moreButton.disabled = true;
       hide(moreButton);
