@@ -1,5 +1,7 @@
 NAME = 'Like Mentions'
 
+HELP = 'Have Lyra like any message she\'s mentioned in'
+
 def handle(data, groupme_api):
   if 'attachments' not in data:
     return

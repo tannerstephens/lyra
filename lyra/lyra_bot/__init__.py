@@ -56,6 +56,9 @@ class LyraBot:
       db_plugin = Plugin.query.filter_by(name=plugin.NAME).first()
 
       if db_plugin is None:
-        Plugin(name=plugin.NAME).save()
+        db_plugin = Plugin(name=plugin.NAME)
+
+      db_plugin.help = plugin.HELP
+      db_plugin.save()
 
 lyra = LyraBot()

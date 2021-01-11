@@ -1,5 +1,7 @@
 NAME = 'Doot Doot'
 
+HELP = 'Get Spooky with !doot'
+
 def handle(data, groupme_api):
   if '!doot' in data['text'].lower():
     attachments = [

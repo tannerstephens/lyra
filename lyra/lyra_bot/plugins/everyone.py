@@ -1,5 +1,7 @@
 NAME = 'Mention Everyone'
 
+HELP = 'Quickly ping everyone with @everyone'
+
 def handle(data, groupme_api):
   if '@everyone' in data['text'].lower():
     group = groupme_api.group(data['group_id'])

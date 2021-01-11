@@ -1,5 +1,7 @@
 NAME = 'Simon Says'
 
+HELP = 'Have Lyra repeat anything after !say'
+
 def handle(data, groupme_api):
   if '!say' == data['text'].lower()[:4]:
     message = data['text'][4:]

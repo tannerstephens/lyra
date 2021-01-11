@@ -35,6 +35,7 @@ class Group(Model):
 
 class Plugin(Model):
   name = Column(db.String(80), unique=True, nullable=False)
+  help = Column(db.String(80))
 
   def __repr__(self):
     return self.name

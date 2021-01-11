@@ -2,6 +2,8 @@ from requests import get
 
 NAME = 'Random Memes'
 
+HELP = 'Get a fresh meme with !meme'
+
 MEME_API = 'https://meme-api.herokuapp.com/gimme'
 
 def handle(data, groupme_api):

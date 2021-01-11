@@ -4,6 +4,8 @@ from time import sleep
 
 NAME = 'Tell Jokes'
 
+HELP = 'Tell a joke with !joke'
+
 JOKE_URL = 'https://v2.jokeapi.dev/joke/Miscellaneous,Dark,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart'
 
 def handle(data, groupme_api):
