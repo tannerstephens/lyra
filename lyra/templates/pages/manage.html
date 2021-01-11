@@ -34,10 +34,12 @@
         <div class="columns is-multiline">
           {% for plugin in plugins %}
             <div class="column is-one-third-desktop is-half-tablet">
-              <div class="field">
-                <input class="is-checkradio is-medium is-dark" type="checkbox" name="{{ plugin.name }}" id="{{ plugin.name }}" {% if plugin in enabled_plugins %}checked{% endif %}>
-                <label for="{{ plugin.name }}" data-tooltip="{{ plugin.help }}">{{ plugin.name }}</label>
-              </div>
+              <span class="has-tooltip-arrow" data-tooltip="{{ plugin.help }}">
+                <div class="field">
+                  <input class="is-checkradio is-medium is-dark" type="checkbox" name="{{ plugin.name }}" id="{{ plugin.name }}" {% if plugin in enabled_plugins %}checked{% endif %}>
+                  <label for="{{ plugin.name }}">{{ plugin.name }}</label>
+                </div>
+              </span>
             </div>
           {% endfor %}
         </div>
