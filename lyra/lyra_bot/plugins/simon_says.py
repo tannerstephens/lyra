@@ -13,7 +13,7 @@ def handle(data, groupme_api):
 
     if mentions:
       mentions = mentions[0]
-      delta = 4 + (pre_strip_length - len(message))
+      delta = 4 + (pre_strip_length - len(message)) - 1
 
       locations = mentions['loci']
 
