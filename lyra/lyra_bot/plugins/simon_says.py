@@ -11,7 +11,6 @@ def handle(data, groupme_api):
     message = message.strip()
 
     if mentions:
-
       delta = 4 + (pre_strip_length - len(message))
 
       locations = mentions['loci']
@@ -31,5 +30,7 @@ def handle(data, groupme_api):
           'type': 'mentions'
         }
       ]
+    else:
+      attachments = None
 
     groupme_api.send_message(data['group_id'], message, attachments)
