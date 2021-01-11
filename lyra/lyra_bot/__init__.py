@@ -37,7 +37,12 @@ class LyraBot:
 
     for plugin in self.plugins:
       if plugin.NAME in enabled_plugins:
-        plugin.handle(data, groupme_api)
+        try:
+          plugin.handle(data, groupme_api)
+        except Exception as e:
+          print(f'Exception during handling of {plugin.NAME}')
+          print(e)
+          print(data)
 
   def _load_plugins(self):
     self.plugins = []
