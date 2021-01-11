@@ -22,7 +22,7 @@ def handle(data, groupme_api):
       for location in locations:
         new_locations.append([
           location[0] - delta,
-          location[1] - delta
+          location[1]
         ])
 
       attachments = [
