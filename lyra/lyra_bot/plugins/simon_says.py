@@ -10,24 +10,26 @@ def handle(data, groupme_api):
 
     message = message.strip()
 
-    delta = 4 + (pre_strip_length - len(message))
+    if mentions:
 
-    locations = mentions['loci']
+      delta = 4 + (pre_strip_length - len(message))
 
-    new_locations = []
+      locations = mentions['loci']
 
-    for location in locations:
-      new_locations.append([
-        location[0] + delta,
-        location[1] + delta
-      ])
+      new_locations = []
 
-    attachments = [
-      {
-        'loci': new_locations,
-        'user_ids': mentions['user_ids'],
-        'type': 'mentions'
-      }
-    ]
+      for location in locations:
+        new_locations.append([
+          location[0] + delta,
+          location[1] + delta
+        ])
+
+      attachments = [
+        {
+          'loci': new_locations,
+          'user_ids': mentions['user_ids'],
+          'type': 'mentions'
+        }
+      ]
 
     groupme_api.send_message(data['group_id'], message, attachments)
