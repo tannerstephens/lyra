@@ -6,6 +6,7 @@ def handle(data, groupme_api):
 
     mentions = list(filter(lambda attachment: attachment['type'] == 'mentions', data['attachments']))
 
+
     pre_strip_length = len(message)
 
     message = message.strip()
