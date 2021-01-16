@@ -1,0 +1,10 @@
+{% for plugin in plugins %}
+  <div class="column is-one-third-desktop is-half-tablet">
+    <span class="has-tooltip-arrow" data-tooltip="{{ plugin.help }}">
+      <div class="field">
+        <input class="is-checkradio is-medium is-dark" type="checkbox" name="{{ plugin.name }}" id="{{ plugin.name }}" {% if plugin in enabled_plugins %}checked{% endif %} {% if disabled %}disabled{% endif %}>
+        <label for="{{ plugin.name }}">{{ plugin.name }}</label>
+      </div>
+    </span>
+  </div>
+{% endfor %}

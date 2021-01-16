@@ -1,0 +1,27 @@
+{% extends "pages/_base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <nav class="level">
+      <div class="level-left">
+        <h1 class="title is-2">{{ group['name'] }}</h1>
+      </div>
+      <div class="level-right">
+        <a class="button is-info" href="/groups">Back</a>
+      </div>
+    </nav>
+
+    <div class="notification is-info">This group is managed by another user, but you can still view it!</div>
+
+    <div class="box">
+      <h2 class="title is-4">Enabled Plugins</h2>
+
+      <div class="columns is-multiline">
+        {% set disabled = True %}
+        {% include 'pages/group/_plugins.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

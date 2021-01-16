@@ -19,22 +19,24 @@
         {% endwith %}
       {% endfor %}
 
-      <a class="box" id="more" href="#more" name="more">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64">
-              <img src="{{ url_for('static', filename='img/new.png') }}" alt="new">
-            </figure>
-          </div>
-          <div class="media-content">
-            <h1 class="title">
-              Load more groups
-            </h1>
-          </div>
-        </article>
-      </a>
+      {% if groups|length == 10 %}
+        <a class="box" id="more" href="#more" name="more">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img src="{{ url_for('static', filename='img/new.png') }}" alt="new">
+              </figure>
+            </div>
+            <div class="media-content">
+              <h1 class="title">
+                Load more groups
+              </h1>
+            </div>
+          </article>
+        </a>
+      {% endif %}
 
-      <div id="no-more" class="has-text-centered is-hidden"><h1 class="title has-text-grey">No More Groups</h1></div>
+      <div id="no-more" class="has-text-centered {% if groups|length == 10 %}is-hidden{% endif %}"><h1 class="title has-text-grey">No More Groups</h1></div>
 
       <span class="loaderContainer is-hidden" id="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></span>
     </div>

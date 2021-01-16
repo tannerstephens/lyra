@@ -32,6 +32,56 @@ def list_groups():
 
 @pages.route('/groups/<string:group_id>')
 @login_required
+def group(group_id):
+  gat = session['groupme_access_token']
+
+  try:
+    groupme_api.group(group_id, gat)
+  except:
+    return redirect(url_for('pages.groups_overview'))
+
+  db_group = Group.query.filter_by(groupme_id=group_id).first()
+
+  if db_group is None:
+    callback = current_app.config['BASE_URL'] + '/lyra/'
+    bot = add_lyra_to_group(group_id, gat, callback)
+    db_group = Group(
+      groupme_id=group_id,
+      owner=g.user,
+      bot_id=bot['bot']['bot_id']
+    ).save()
+
+  if db_group.owner is g.user:
+    return redirect(url_for('pages.manage_group', group_id=group_id))
+  else:
+    return redirect(url_for('pages.view_group', group_id=group_id))
+
+@pages.route('/groups/<string:group_id>/view')
+@login_required
+def view_group(group_id):
+  gat = session['groupme_access_token']
+
+  try:
+    group = groupme_api.group(group_id, gat)
+    print(group)
+  except:
+    return redirect(url_for('pages.groups_overview'))
+
+  db_group = Group.query.filter_by(groupme_id=group_id).first()
+
+  if db_group is None:
+    return redirect(url_for('pages.group', group_id=group_id))
+
+  if db_group.owner is g.user:
+    return redirect(url_for('pages.manage_group'), group_id=group_id)
+
+  plugins = Plugin.query.all()
+  enabled_plugins = db_group.plugins
+
+  return render_template('pages/group/view.html', group=group, plugins=plugins, enabled_plugins=enabled_plugins)
+
+@pages.route('/groups/<string:group_id>/manage')
+@login_required
 def manage_group(group_id):
   gat = session['groupme_access_token']
 
@@ -43,23 +93,15 @@ def manage_group(group_id):
   db_group = Group.query.filter_by(groupme_id=group_id).first()
 
   if db_group is None:
-    callback = current_app.config['BASE_URL'] + '/lyra/'
-    bot = add_lyra_to_group(group_id, gat, callback)
-    group = groupme_api.group(group_id, gat)
-    db_group = Group(
-      groupme_id=group_id,
-      owner=g.user,
-      bot_id=bot['bot']['bot_id']
-    ).save()
+    return redirect(url_for('pages.group', group_id=group_id))
 
   if db_group.owner is not g.user:
-    flash('This group is already managed by someone else', 'warning')
-    return redirect(url_for('pages.groups_overview'))
+    return redirect(url_for('pages.view_group'), group_id=group_id)
 
   plugins = Plugin.query.all()
   enabled_plugins = db_group.plugins
 
-  return render_template('pages/manage.html', group=group, plugins=plugins, enabled_plugins=enabled_plugins)
+  return render_template('pages/group/manage.html', group=group, plugins=plugins, enabled_plugins=enabled_plugins)
 
 @pages.route('/groups/<string:group_id>/remove')
 @login_required
