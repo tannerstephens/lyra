@@ -54,15 +54,21 @@ class GroupmeAPI:
   def group(self, group_id, access_token=None):
     return self._get_endpoint(f'/groups/{group_id}', access_token)
 
-  def add_user(self, group_id, nickname, email, access_token=None):
+  def add_user(self, group_id, nickname, email=None, access_token=None, user_id=None):
     data = {
       'members': [
         {
-          'nickname': nickname,
-          'email': email
+          'nickname': nickname
         }
       ]
     }
+
+    if email:
+      data['members'][0]['email'] = email
+    elif user_id:
+      data['members'][0]['user_id'] = user_id
+    else:
+      raise Exception('Email or user_id required')
 
     results_id = self._post_endpoint(f'/groups/{group_id}/members/add', data, access_token)['results_id']
     return self._get_endpoint(f'/groups/{group_id}/members/results/{results_id}', access_token)
