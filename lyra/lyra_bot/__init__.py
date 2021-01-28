@@ -10,11 +10,13 @@ DIR = path.dirname(path.abspath(__file__))
 
 class LyraBot:
   def __init__(self, app=None):
+    self.app = app
     if app is not None:
       self.init_app(app)
 
   def init_app(self, app):
     self._load_plugins()
+    self.app = app
     @app.route('/lyra/', methods=['POST'])
     def handle():
       self._handle_message(request.json)
@@ -25,7 +27,7 @@ class LyraBot:
 
   def _handle_message(self, data):
     if(data['sender_id'] != groupme_api.me_data['id']):
-      print(data)
+      self.app.logger.error(data)
       self._run_plugins(data)
 
   def _run_plugins(self, data):
