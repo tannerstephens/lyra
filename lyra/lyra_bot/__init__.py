@@ -62,6 +62,11 @@ class LyraBot:
         db_plugin = Plugin(name=plugin.NAME)
 
       db_plugin.help = plugin.HELP
+      try:
+        db_plugin.disabled = plugin.DISABLED
+      except:
+        db_plugin.disabled = False
+
       db_plugin.save()
 
 lyra = LyraBot()

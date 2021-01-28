@@ -145,7 +145,7 @@ def update_group(group_id):
     if plugin not in enabled_plugins_string:
       db_plugin = Plugin.query.filter_by(name=plugin).first()
 
-      if db_plugin is not None:
+      if db_plugin is not None and not db_plugin.disabled:
         db_group.plugins.append(db_plugin)
 
   db_group.save()
