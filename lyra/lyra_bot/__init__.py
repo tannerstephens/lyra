@@ -25,6 +25,7 @@ class LyraBot:
 
   def _handle_message(self, data):
     if(data['sender_id'] != groupme_api.me_data['id']):
+      print(data)
       self._run_plugins(data)
 
   def _run_plugins(self, data):
