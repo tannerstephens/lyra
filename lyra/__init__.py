@@ -1,3 +1,4 @@
+from logging import getLogger
 from flask import Flask
 from flask_migrate import upgrade
 from .before_request import before_request
@@ -28,5 +29,9 @@ def register_extensions(app):
   upgrade()
   groupme_oauth.init_app(app, 'auth.login')
   groupme_api.init_app(app)
+
+def register_logger(app):
+  gunicorn_logger = getLogger('gunicorn.error')
+  app.loggers.handlers = gunicorn_logger.handlers
 
 app = create_app()
