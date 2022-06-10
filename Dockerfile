@@ -1,4 +1,4 @@
-FROM python:3.7 as base
+FROM python:3.10 as base
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
@@ -30,5 +30,4 @@ USER appuser
 COPY . .
 
 EXPOSE 8000
-ENTRYPOINT ["gunicorn"]
-CMD ["--bind", "0.0.0.0:8000", "-w", "4", "lyra:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-w", "4", "lyra:app"]

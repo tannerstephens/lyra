@@ -1,0 +1,15 @@
+services:
+  lyra:
+    image: trainrex/lyra:latest
+    volumes:
+      - database:/var/database
+    ports:
+      - 8000:8000
+    environment:
+      GROUPME_ACCESS_TOKEN: <FILL>
+      GROUPME_CLIENT_ID: <FILL>
+      DATABASE_URI: sqlite:////var/database/lyra.db
+      SECRET_KEY: <FILL>
+      BASE_URL: <FILL>
+volumes:
+  database: {}

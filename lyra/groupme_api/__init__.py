@@ -1,7 +1,7 @@
-import requests
-
 from json.decoder import JSONDecodeError
 from uuid import uuid4
+
+import requests
 
 BASE_URL = 'https://api.groupme.com/v3{endpoint}'
 
@@ -51,6 +51,16 @@ class GroupmeAPI:
     params['page'] = page
     return self._get_endpoint('/groups', access_token, params)
 
+  def all_groups(self, access_token=None, omit_members=True):
+    groups = []
+    page = 1
+
+    while(new_groups := self.groups(access_token, omit_members, page)):
+      groups += new_groups
+      page += 1
+
+    return groups
+
   def group(self, group_id, access_token=None):
     return self._get_endpoint(f'/groups/{group_id}', access_token)
 
@@ -93,6 +103,9 @@ class GroupmeAPI:
       self._post_endpoint('/bots/destroy', json, access_token)
     except JSONDecodeError:
       return True
+
+  def list_bots(self, access_token=None):
+    return self._get_endpoint('/bots', access_token)
 
   def remove_user(self, group_id, membership_id, access_token=None):
     try:
