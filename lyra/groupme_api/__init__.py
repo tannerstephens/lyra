@@ -4,6 +4,7 @@ from uuid import uuid4
 import requests
 
 BASE_URL = 'https://api.groupme.com/v3{endpoint}'
+IMAGE_URL = 'https://image.groupme.com'
 
 class GroupmeAPI:
   def __init__(self, app=None):
@@ -133,3 +134,11 @@ class GroupmeAPI:
 
   def like_message(self, group_id, message_id, access_token=None):
     return self._post_endpoint(f'/messages/{group_id}/{message_id}/like', None, access_token)
+
+  def upload_image(self, binary_image_data, access_token=None, mime_type='image/jpeg'):
+    headers = self._get_auth_header(access_token)
+    headers.update({
+      'Content-Type': mime_type,
+    })
+    resp = requests.post(f'{IMAGE_URL}/pictures', data=binary_image_data, headers=headers)
+    return resp.json()['payload']['picture_url']

@@ -5,7 +5,6 @@ from flask_migrate import upgrade
 
 from .before_request import before_request
 from .extensions import db, groupme_api, groupme_oauth, migrate
-from .functions import add_lyra_to_group
 from .lyra_bot import lyra
 from .models import Group, User
 from .routes import register_blueprints
