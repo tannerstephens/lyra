@@ -27,7 +27,7 @@ def generate_image(data, groupme_api, request):
     image = random.choice(images)
     binary_data = base64.b64decode(image)
 
-    image_url = groupme_api.upload_image(binary_data)
+    image_url = groupme_api.upload_image(binary_data, mime_type='image/webp')
 
     attachments = [
       {
